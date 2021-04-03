@@ -10,10 +10,13 @@ public class arrowSpawn : MonoBehaviour
     public float startingTimeBTS;
 
     private float timeBTS;
-
+    private void Start()
+    {
+        startingTimeBTS = 0.9f;
+    }
     void Update()
     {
-        if (GameObject.Find("Canvas").GetComponent<Pause_Menu>().GameIsPaused == false)
+        if (GameObject.Find("Canvas").GetComponent<Pause_Menu>().GameIsPaused == false && !GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<UpgradeMenu>().upgradeMenu.activeInHierarchy)
         {
             Vector3 difference = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             float rotZ = Mathf.Atan2(difference.y, difference.x) * Mathf.Rad2Deg;

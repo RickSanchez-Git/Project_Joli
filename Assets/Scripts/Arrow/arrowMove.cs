@@ -27,7 +27,7 @@ public class arrowMove : MonoBehaviour
     }
     public IEnumerator notExisting()
     {
-       yield return new WaitForSeconds(1.3f);
+       yield return new WaitForSeconds(2f);
        Destroy(gameObject);
     }
 }

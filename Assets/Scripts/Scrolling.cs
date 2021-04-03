@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class Scrolling : MonoBehaviour
 {
-    public float backgroundSize = 32.68f;
+    public float backgroundSize = 29.78f;
+    public float viewZone = 12f;
 
     private Transform cameraTransform;
     public Transform[] layers;
-    private float viewZone = 10f;
+
     private int leftIndex;
     private int rightIndex;
-    // Start is called before the first frame update
+
+    
     void Start()
     {
         cameraTransform = Camera.main.transform;
@@ -24,11 +26,12 @@ public class Scrolling : MonoBehaviour
         leftIndex = 0;
         rightIndex = layers.Length - 1;
     }
-
+    
+    //Scrolling in hotizontal orientation 
     private void ScrollLeft()
     {
-        int lastRight = rightIndex;
-        layers[rightIndex].position = new Vector3(layers[rightIndex].position.x - backgroundSize, 0, 0);
+        //int lastRight = rightIndex;
+        layers[rightIndex].position = new Vector3(layers[rightIndex].position.x - (backgroundSize * 3), 0, transform.position.z);
         leftIndex = rightIndex;
         rightIndex--;
 
@@ -37,13 +40,15 @@ public class Scrolling : MonoBehaviour
             rightIndex = layers.Length - 1;
         }
     }
-
+    
 
     private void ScrollRight()
     {
-        int lastLeft = leftIndex;
-        layers[leftIndex].position = new Vector3(layers[leftIndex].position.x + backgroundSize, 0, 0);
+        //int lastLeft = leftIndex;
+        layers[leftIndex].position = new Vector3(layers[leftIndex].position.x + (backgroundSize * 3), 0, transform.position.z);
+        
         rightIndex = leftIndex;
+
         leftIndex++;
 
         if (leftIndex == layers.Length)
@@ -52,14 +57,13 @@ public class Scrolling : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
         {
             ScrollLeft();
         }
+        
         if(cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
         {
             ScrollRight();

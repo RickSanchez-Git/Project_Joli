@@ -31,7 +31,10 @@ public class Pause_Menu : MonoBehaviour
     {
         StartCoroutine(WaitFunc());
         pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
+        if (GetComponent<UpgradeMenu>().timeToUpgrade == false)
+        {
+            Time.timeScale = 1f;
+        }
         GameIsPaused = false;
     }
 

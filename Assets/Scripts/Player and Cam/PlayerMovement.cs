@@ -7,14 +7,13 @@ public class PlayerMovement : MonoBehaviour
     public float moveX;
     public float moveY;
     public float health;
-    public float speed = 3f;
+    public float speed;
     public int numOfHearts;
     public Image[] hearts;
     public Sprite fullHeart;
     public Sprite emptyHeart;
-    public float heal = 0.1f;
+    public float heal;
     Animator anim;
-
 
     private Rigidbody2D rb;
 
@@ -23,14 +22,10 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        heal = 0.1f;
+        speed = 3f;
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Enemy")
-            health -= 1f;
     }
 
     // Update is called once per frame
@@ -60,19 +55,21 @@ public class PlayerMovement : MonoBehaviour
         }
         moveY = Input.GetAxis("Vertical");
         moveX = Input.GetAxis("Horizontal");
-        if (moveX != 0 || moveY != 0)
+        if ((moveX != 0 || moveY != 0) && !GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<UpgradeMenu>().upgradeMenu.activeInHierarchy)
         {
             anim.SetBool("Jump", true);
-        }
-        else {
+        } else {
             anim.SetBool("Jump", false);
         }
-        rb.MovePosition(rb.position + Vector2.right * moveX * speed * Time.deltaTime 
-            + Vector2.up * moveY * speed * Time.deltaTime);
-        if (moveX > 0 && !faceRight)
-            flip();
-        else if (moveX < 0 && faceRight)
-            flip();
+        if (!GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<UpgradeMenu>().upgradeMenu.activeInHierarchy)
+        {
+            rb.MovePosition(rb.position + Vector2.right * moveX * speed * Time.deltaTime
+                + Vector2.up * moveY * speed * Time.deltaTime);
+            if (moveX > 0 && !faceRight)
+                flip();
+            else if (moveX < 0 && faceRight)
+                flip();
+        }
     }
 
     void flip()

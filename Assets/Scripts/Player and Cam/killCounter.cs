@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class killCounter : MonoBehaviour
 {
-    public float numbOfKills = 0;
+    //public float numbOfKills = 0;
     void Start()
     {
         
